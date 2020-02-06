@@ -120,6 +120,9 @@ dependencies {
     implementation "com.google.firebase:firebase-auth:17.0.0"
     // Firebase Firestore
     implementation "com.google.firebase:firebase-firestore:19.0.0"
+    // Firebase Cloud Messaging
+    implementation "com.google.firebase:firebase-messaging:18.0.0"
+    implementation 'me.leolin:ShortcutBadger:1.1.21@aar'
 
 
 

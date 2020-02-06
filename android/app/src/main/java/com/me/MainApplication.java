@@ -14,6 +14,8 @@ import java.util.List;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 // Firebase Firestore
 import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
+// Firebase Cloud Messaging
+import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -32,6 +34,8 @@ public class MainApplication extends Application implements ReactApplication {
       packages.add(new RNFirebaseAuthPackage());
       // Firebase Firestore
       packages.add(new RNFirebaseFirestorePackage());
+      // Firebase Cloud Messaging
+      packages.add(new RNFirebaseMessagingPackage());
 
       return packages;
     }

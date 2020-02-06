@@ -13,6 +13,7 @@ export default class Loading extends React.Component {
   componentDidMount() {
     this._isMounted = true;
     this._checkUserAuth();
+    this._getPermissionNotiToken();
   }
 
   componentWillUnmount() {
@@ -24,6 +25,37 @@ export default class Loading extends React.Component {
   | |==|  |==|
   |------------------------------------------------------------------------------------------------------------------------------------
   *****/
+
+  /*** GET PERMISSION ***/
+  _getPermissionNotiToken() {
+    firebase
+      .messaging()
+      .hasPermission()
+      .then(enabled => {
+        if (enabled) {
+          firebase
+            .messaging()
+            .getToken()
+            .then(token => {
+              console.log('Token: ', token);
+            });
+          // user has permissions
+        } else {
+          firebase
+            .messaging()
+            .requestPermission()
+            .then(() => {
+              console.log('User Now Has Permission');
+            })
+            .catch(error => {
+              console.log('Error', error);
+              // User has rejected permissions
+            });
+        }
+      });
+  }
+
+  /*** CHECK LOGIN ***/
   _checkUserAuth() {
     firebase.auth().onAuthStateChanged(user => {
       this.props.navigation.navigate(user ? 'Home' : 'SignUp');
