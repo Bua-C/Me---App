@@ -10,29 +10,32 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+// Firebase Authentication
+import io.invertase.firebase.auth.RNFirebaseAuthPackage;
+
 public class MainApplication extends Application implements ReactApplication {
 
-  private final ReactNativeHost mReactNativeHost =
-      new ReactNativeHost(this) {
-        @Override
-        public boolean getUseDeveloperSupport() {
-          return BuildConfig.DEBUG;
-        }
+  private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
+    @Override
+    public boolean getUseDeveloperSupport() {
+      return BuildConfig.DEBUG;
+    }
 
-        @Override
-        protected List<ReactPackage> getPackages() {
-          @SuppressWarnings("UnnecessaryLocalVariable")
-          List<ReactPackage> packages = new PackageList(this).getPackages();
-          // Packages that cannot be autolinked yet can be added manually here, for example:
-          // packages.add(new MyReactNativePackage());
-          return packages;
-        }
+    @Override
+    protected List<ReactPackage> getPackages() {
+      @SuppressWarnings("UnnecessaryLocalVariable")
+      List<ReactPackage> packages = new PackageList(this).getPackages();
 
-        @Override
-        protected String getJSMainModuleName() {
-          return "index";
-        }
-      };
+      // Firebase Authentication
+      packages.add(new RNFirebaseAuthPackage());
+      return packages;
+    }
+
+    @Override
+    protected String getJSMainModuleName() {
+      return "index";
+    }
+  };
 
   @Override
   public ReactNativeHost getReactNativeHost() {
@@ -55,9 +58,9 @@ public class MainApplication extends Application implements ReactApplication {
     if (BuildConfig.DEBUG) {
       try {
         /*
-         We use reflection here to pick up the class that initializes Flipper,
-        since Flipper library is not available in release mode
-        */
+         * We use reflection here to pick up the class that initializes Flipper, since
+         * Flipper library is not available in release mode
+         */
         Class<?> aClass = Class.forName("com.facebook.flipper.ReactNativeFlipper");
         aClass.getMethod("initializeFlipper", Context.class).invoke(null, context);
       } catch (ClassNotFoundException e) {
