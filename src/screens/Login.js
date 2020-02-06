@@ -1,5 +1,12 @@
 import React from 'react';
-import {StyleSheet, Text, TextInput, View, Button} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  Button,
+  TouchableOpacity,
+} from 'react-native';
 import friebase from 'react-native-firebase';
 export default class Login extends React.Component {
   _isMounted = false;
@@ -21,9 +28,7 @@ export default class Login extends React.Component {
     this._isMounted = false;
   }
 
-  handleLogin = () => {
-    // TODO: Firebase stuff...
-    console.log('handleLogin');
+  _handleLogin = () => {
     friebase
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
@@ -40,7 +45,7 @@ export default class Login extends React.Component {
         <TextInput
           style={styles.textInput}
           autoCapitalize="none"
-          placeholder="Email"
+          placeholder="Type email"
           onChangeText={email => this._isMounted && this.setState({email})}
           value={this.state.email}
         />
@@ -48,17 +53,19 @@ export default class Login extends React.Component {
           secureTextEntry
           style={styles.textInput}
           autoCapitalize="none"
-          placeholder="Password"
+          placeholder="Type password"
           onChangeText={password =>
             this._isMounted && this.setState({password})
           }
           value={this.state.password}
         />
-        <Button title="Login" onPress={this.handleLogin} />
-        <Button
-          title="Don't have an account? Sign Up"
-          onPress={() => this.props.navigation.navigate('SignUp')}
-        />
+
+        <TouchableOpacity style={styles.button} onPress={this._handleLogin}>
+          <Text>Sign Up ></Text>
+        </TouchableOpacity>
+        <Text onPress={() => this.props.navigation.navigate('SignUp')}>
+          Don't have an account? Sign Up
+        </Text>
       </View>
     );
   }
@@ -75,5 +82,14 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     marginTop: 8,
+  },
+  button: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'red',
+    marginTop: 8,
+    width: '90%',
+    padding: 9,
+    borderRadius: 5,
   },
 });

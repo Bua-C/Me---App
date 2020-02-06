@@ -7,15 +7,24 @@ import Login from './src/screens/Login';
 import Main from './src/screens/Main';
 import SignUp from './src/screens/SignUp';
 
-const LoginStack = createStackNavigator({
-  Login,
-});
-const SignupStack = createStackNavigator({
-  SignUp,
-});
-const HomeStack = createStackNavigator({
-  Main,
-});
+const LoginStack = createStackNavigator(
+  {
+    Login,
+  },
+  {headerMode: 'none'},
+);
+const SignupStack = createStackNavigator(
+  {
+    SignUp,
+  },
+  {headerMode: 'none'},
+);
+const HomeStack = createStackNavigator(
+  {
+    Main,
+  },
+  {headerMode: 'none'},
+);
 
 export default createAppContainer(
   createSwitchNavigator(
@@ -25,7 +34,6 @@ export default createAppContainer(
       Login: LoginStack,
       Home: HomeStack,
     },
-    {headerMode: 'none'},
     {initialRouteName: 'Load'},
   ),
 );

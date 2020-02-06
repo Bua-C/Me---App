@@ -1,5 +1,12 @@
 import React from 'react';
-import {StyleSheet, Text, TextInput, View, Button} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  Button,
+  TouchableOpacity,
+} from 'react-native';
 import firebase from 'react-native-firebase';
 
 export default class SignUp extends React.Component {
@@ -21,8 +28,7 @@ export default class SignUp extends React.Component {
     this._isMounted = false;
   }
 
-  handleSignUp = () => {
-    console.log('handleSignUp');
+  _handleSignUp = () => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
@@ -37,7 +43,7 @@ export default class SignUp extends React.Component {
           <Text style={{color: 'red'}}>{this.state.errorMessage}</Text>
         )}
         <TextInput
-          placeholder="Email"
+          placeholder="Type email here..."
           autoCapitalize="none"
           style={styles.textInput}
           onChangeText={email => this._isMounted && this.setState({email})}
@@ -45,7 +51,7 @@ export default class SignUp extends React.Component {
         />
         <TextInput
           secureTextEntry
-          placeholder="Password"
+          placeholder="Type password here..."
           autoCapitalize="none"
           style={styles.textInput}
           onChangeText={password =>
@@ -53,11 +59,12 @@ export default class SignUp extends React.Component {
           }
           value={this.state.password}
         />
-        <Button title="Sign Up" onPress={this.handleSignUp} />
-        <Button
-          title="Already have an account? Login"
-          onPress={() => this.props.navigation.navigate('Login')}
-        />
+        <TouchableOpacity style={styles.button} onPress={this._handleSignUp}>
+          <Text>Sign Up ></Text>
+        </TouchableOpacity>
+        <Text onPress={() => this.props.navigation.navigate('Login')}>
+          Already have an account? Login
+        </Text>
       </View>
     );
   }
@@ -71,8 +78,18 @@ const styles = StyleSheet.create({
   textInput: {
     height: 40,
     width: '90%',
-    borderColor: 'gray',
+    borderColor: 'pink',
     borderWidth: 1,
     marginTop: 8,
+    borderRadius: 5,
+  },
+  button: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'red',
+    marginTop: 8,
+    width: '90%',
+    padding: 9,
+    borderRadius: 5,
   },
 });
