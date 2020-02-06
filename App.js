@@ -25,8 +25,7 @@ export default createAppContainer(
       Login: LoginStack,
       Home: HomeStack,
     },
-    {initialRouteName: 'Load'},
-
     {headerMode: 'none'},
+    {initialRouteName: 'Load'},
   ),
 );

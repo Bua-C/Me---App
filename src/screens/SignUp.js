@@ -1,10 +1,33 @@
 import React from 'react';
 import {StyleSheet, Text, TextInput, View, Button} from 'react-native';
+import firebase from 'react-native-firebase';
+
 export default class SignUp extends React.Component {
-  state = {email: '', password: '', errorMessage: null};
+  _isMounted = false;
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      errorMessage: null,
+    };
+  }
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   handleSignUp = () => {
-    // TODO: Firebase stuff...
     console.log('handleSignUp');
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .then(() => this.props.navigation.navigate('Home'))
+      .catch(error => this.setState({errorMessage: error.message}));
   };
   render() {
     return (
@@ -17,7 +40,7 @@ export default class SignUp extends React.Component {
           placeholder="Email"
           autoCapitalize="none"
           style={styles.textInput}
-          onChangeText={email => this.setState({email})}
+          onChangeText={email => this._isMounted && this.setState({email})}
           value={this.state.email}
         />
         <TextInput
@@ -25,7 +48,9 @@ export default class SignUp extends React.Component {
           placeholder="Password"
           autoCapitalize="none"
           style={styles.textInput}
-          onChangeText={password => this.setState({password})}
+          onChangeText={password =>
+            this._isMounted && this.setState({password})
+          }
           value={this.state.password}
         />
         <Button title="Sign Up" onPress={this.handleSignUp} />
