@@ -17,20 +17,20 @@ export default class Main extends React.Component {
     this.state = {
       currentUser: null,
       errorMessage: null,
-      message: null,
-      data: null,
+      message: [],
     };
-    // this.ref = firebase
-    //   .firestore()
-    //   .collection('GroupZ')
-    //   .doc('UserZ');
+    this.ref = firebase
+      .firestore()
+      .collection('ChatRoom')
+      .doc('');
   }
 
   componentDidMount() {
     this._isMounted = true;
     const {currentUser} = firebase.auth();
+    console.log(currentUser);
     this.setState({currentUser});
-    // this._fetchStore();
+    this._fetchStore();
   }
 
   componentWillUnmount() {
@@ -44,32 +44,30 @@ export default class Main extends React.Component {
 *****/
 
   /*** FETCH DATA IN FIRESTORE ***/
-  // _fetchStore() {
-  //   try {
-  //     this.ref.onSnapshot({
-  //       error: e => console.error(e),
-  //       next: querySnapshot => {
-  //         // this._isMounted &&
-  //         //   this.setState({data: querySnapshot._data.or_status});
-  //         console.log(
-  //           '%c Snapshot:',
-  //           'color: green; font-size: 13px',
-  //           querySnapshot,
-  //         );
-  //       },
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+  _fetchStore() {
+    try {
+      this.ref.onSnapshot({
+        error: e => console.error(e),
+        next: querySnapshot => {
+          // this._isMounted && this.setState({data: querySnapshot._data});
+          console.log(
+            '%c Snapshot:',
+            'color: green; font-size: 13px',
+            querySnapshot,
+          );
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   /*** ADD MESSAGE ***/
-  // _OnAddMessage = () => {
-  //   this.ref.set({
-  //     // message: this.state.message,
-  //     message: 'message',
-  //   });
-  // };
+  _OnAddMessage = () => {
+    this.ref.set({
+      users: [...prevState.message, this.state.message],
+    });
+  };
 
   /*** SIGN OUT ***/
   _signOut = () => {
@@ -84,62 +82,56 @@ export default class Main extends React.Component {
   };
 
   render() {
-    const {currentUser} = this.state;
     return (
-      <View style={styles.container}>
-        <Button
-          title="Log Out"
-          onPress={this._signOut}
-          style={styles.buttonLogin}
-        />
-        <View style={styles.viewBox}>
+      <View style={styles.containertxt}>
+        {/* <Button title="Out" onPress={this._signOut} /> */}
+        <View></View>
+        <View style={styles.inputContainertxt}>
           <TextInput
             placeholder="Type message here..."
-            style={styles.input}
+            style={styles.inputtxt}
             onChangeText={message =>
               this._isMounted && this.setState({message})
             }
             value={this.state.message}
             autoCapitalize="none"
           />
-          {/* <TouchableOpacity onPress={this._OnAddMessage} style={styles.send}>
-            <Text style={styles.text}>Send ></Text>
-          </TouchableOpacity> */}
+          <TouchableOpacity onPress={this._OnAddMessage} style={styles.sendtxt}>
+            <Text style={styles.texttxt}>Send ></Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
-  container: {
+  containertxt: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
+    justifyContent: 'flex-end',
   },
-  viewBox: {
+  inputContainertxt: {
     flexDirection: 'row',
-    top: 345,
   },
-  input: {
-    width: '85%',
+  inputtxt: {
+    width: '80%',
+    height: 40,
+    borderColor: 'gray',
     borderWidth: 1,
-    borderColor: 'pink',
-    borderRadius: 5,
-    marginBottom: 1,
+    borderRadius: 3,
+    flexDirection: 'row',
+    paddingHorizontal: 10,
   },
-  send: {
+  sendtxt: {
     backgroundColor: 'blue',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingLeft: 5,
-    paddingRight: 5,
+    padding: 10,
     marginLeft: 3,
     borderRadius: 5,
   },
-  text: {
+  texttxt: {
     color: 'white',
-  },
-  buttonLogin: {
-    marginTop: 1000,
   },
 });
