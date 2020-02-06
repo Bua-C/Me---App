@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1077685688554",
+    "firebase_url": "https://chat-53dac.firebaseio.com",
+    "project_id": "chat-53dac",
+    "storage_bucket": "chat-53dac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1077685688554:android:d8819266f4e6b39c721f93",
+        "android_client_info": {
+          "package_name": "com.me"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1077685688554-0gn17gbqpa49o682l5bg9jmd930eo53h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrIgm4Flvwn06GeQLBjvo1rBrPiFwqYZk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1077685688554-0gn17gbqpa49o682l5bg9jmd930eo53h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
