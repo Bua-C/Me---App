@@ -12,6 +12,8 @@ import java.util.List;
 
 // Firebase Authentication
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
+// Firebase Firestore
+import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -28,6 +30,9 @@ public class MainApplication extends Application implements ReactApplication {
 
       // Firebase Authentication
       packages.add(new RNFirebaseAuthPackage());
+      // Firebase Firestore
+      packages.add(new RNFirebaseFirestorePackage());
+
       return packages;
     }
 
