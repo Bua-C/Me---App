@@ -1,37 +1,59 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, Animated} from 'react-native';
+import {TouchableOpacity} from 'react-native';
+import {View, Text, Animated, Easing} from 'react-native';
 
 const SkeletionLoading = props => {
   // *@ State
   const opacityValue = new Animated.Value(0);
+  const offsetX = new Animated.Value(0);
   const [loading, setLoading] = useState(true);
 
   // console.log(opacityValue.addListener(({value}) => console.log(value)));
 
   useEffect(() => {
+    moveToLeft();
     if (loading) {
       _opacityView();
     }
-    setTimeout(() => {
-      setLoading(false);
-    }, 10000);
+    // setTimeout(() => {
+    //   setLoading(false);
+    // }, 10000);
     // return () => {
     //   cleanup;
     // };
   }, []);
-  console.log('%c loading:', 'color: green; font-size: 13px', loading);
+
   const _opacityView = () => {
     // alert('KJLKJL');
     opacityValue.setValue(0);
     Animated.timing(opacityValue, {
-      toValue: 1,
-      duration: 3000,
+      toValue: 2,
+      duration: 1000,
     }).start(() => _opacityView());
   };
 
+  const moveToLeft = () => {
+    offsetX.setValue(0);
+    Animated.timing(offsetX, {
+      toValue: 430,
+      duration: 1000,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    }).start(() => moveToLeft());
+  };
+
+  const moveToRight = () => {
+    Animated.timing(offsetX, {
+      toValue: -120,
+      duration: 1000,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    }).start(() => moveToLeft());
+  };
+
   const opacity = opacityValue.interpolate({
-    inputRange: [0, 0.5, 1],
-    outputRange: [1, 0, 1],
+    inputRange: [0, 1],
+    outputRange: [0.8, 0],
   });
 
   return (
@@ -46,6 +68,24 @@ const SkeletionLoading = props => {
           borderRadius: 20,
         }}
       />
+      <Animated.View
+        style={{
+          backgroundColor: 'red',
+          width: 100,
+          height: 100,
+          borderRadius: 20,
+          transform: [{translateX: offsetX}],
+          opacity: offsetX.interpolate({
+            inputRange: [0, 400],
+            outputRange: [0.8, 0],
+          }),
+        }}
+      />
+      <TouchableOpacity
+        onPress={() => movingBox}
+        style={{backgroundColor: 'blue', padding: 10}}>
+        <Text>Moving</Text>
+      </TouchableOpacity>
     </View>
   );
 };
